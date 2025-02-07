@@ -54,7 +54,7 @@ macro_rules! where_try_into {
 /// Helper macro to quickly create an aggregated enum
 #[macro_export]
 macro_rules! aggregate_enum {
-    ($visibility:vis $name:ident($($variant:tt),+)) => {
+    ($visibility:vis $name:ident { $($variant:tt),+ }) => {
         /// A basic aggregate enum
         #[derive(Debug, Clone)]
         $visibility enum $name {

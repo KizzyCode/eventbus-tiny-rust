@@ -15,7 +15,7 @@ struct EventB;
 struct EventC(u8);
 
 // Aggregate event type
-aggregate_enum!(AggregateEvent(EventA, EventB, EventC));
+aggregate_enum!(AggregateEvent { EventA, EventB, EventC });
 impl PartialEq for AggregateEvent {
     fn eq(&self, other: &Self) -> bool {
         match (self, other) {

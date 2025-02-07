@@ -51,18 +51,32 @@ macro_rules! where_try_into {
     }};
 }
 
-/// Implements `From` to convert `$source` into `$enum::$variant($source)`
+/// Helper macro to quickly create an aggregated enum
 #[macro_export]
-macro_rules! enum_from {
-    ($($source:ty => $enum:tt :: $variant:tt),+) => {
-        $(
-            // Enum conversion
-            impl ::std::convert::From<$source> for $enum {
-                fn from(source: $source) -> Self {
-                    // Do conversion
-                    <$enum>::$variant(source)
-                }
+macro_rules! aggregate_enum {
+    ($visibility:vis $name:ident($($variant:tt),+)) => {
+        /// A basic aggregate enum
+        #[derive(Debug, Clone)]
+        $visibility enum $name {
+            // Enum variants
+            $($variant($variant),)+
+        }
+        impl $name {
+            /// The filter-map function to create `Self` from an event if possible
+            pub fn try_from_event(event: &dyn ::std::any::Any) -> ::std::option::Option<Self> {
+                // Try to downcast events
+                $(
+                    // Downcast event if possible
+                    if let Some(event) = event.downcast_ref::<$variant>() {
+                        // Init self
+                        let this = <$name>::$variant(event.clone());
+                        return Some(this);
+                    }
+                )+
+
+                // No downcast successful
+                return None;
             }
-        )+
+        }
     };
 }

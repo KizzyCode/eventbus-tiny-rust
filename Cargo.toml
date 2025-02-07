@@ -1,0 +1,31 @@
+[package]
+name = "eventbus-tiny"
+version = "0.1.0"
+edition = "2021"
+authors = ["KizzyCode Software Labs./Keziah Biermann <development@kizzycode.de>"]
+keywords = ["event", "events", "eventbus", "concurrent"]
+categories = ["asynchronous", "concurrency"]
+description = "A small, dependency-free crate that provides a multi-producer broadcast-consumer event bus"
+license = "BSD-2-Clause OR MIT"
+repository = "https://github.com/KizzyCode/eventbus-tiny-rust"
+readme = "README.md"
+
+
+[badges]
+appveyor = { repository = "KizzyCode/eventbus-tiny-rust" }
+
+
+[features]
+default = []
+
+
+[dependencies]
+
+[dev-dependencies]
+
+
+[profile.release]
+overflow-checks = true
+
+[profile.bench]
+overflow-checks = true
